@@ -15,6 +15,7 @@ try:
     with open("country_full.csv", "r", encoding="utf-8-sig", newline="") as source:
         reader = csv.DictReader(source)
 
+        # check that the file has name and region columns
         if not {"name", "region"}.issubset(reader.fieldnames or []):
             raise ValueError("Expected 'name' and 'region' columns.")
 
