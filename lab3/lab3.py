@@ -12,16 +12,16 @@ try:
     os.makedirs("output", exist_ok=True)
 
     # open the csv file and read it
-    with open("country_full.csv", "r", encoding="utf-8-sig", newline="") as source:
+    with open("country_full.csv", "r") as source:
         reader = csv.DictReader(source)
 
         # check that the file has name and region columns
-        if not {"name", "region"}.issubset(reader.fieldnames or []):
+        if "name" not in reader.fieldnames or "region" not in reader.fieldnames:
             raise ValueError("Expected 'name' and 'region' columns.")
 
         for row in reader:
-            name = (row["name"] or "").strip()
-            region = (row["region"] or "").strip()
+            name = row["name"].strip()
+            region = row["region"].strip()
 
             if not name or not region:
                 continue
@@ -34,7 +34,7 @@ try:
     # make a file for each region and write the countries in it
     for region, countries in countries_by_region.items():
         filename = "output/" + region + ".CSV"
-        with open(filename, "w", encoding="utf-8", newline="") as output:
+        with open(filename, "w", newline="") as output:
             writer = csv.writer(output)
             writer.writerow(["name", "region"])
             writer.writerows(countries)
@@ -47,5 +47,5 @@ except PermissionError as error:
     print("Permission denied: " + str(error.filename))
 except OSError as error:  # OSError covers IOError too in python 3
     print("File error: " + str(error))
-except (ValueError, csv.Error) as error:
+except ValueError as error:
     print("CSV error: " + str(error))
