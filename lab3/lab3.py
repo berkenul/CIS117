@@ -16,7 +16,7 @@ try:
         reader = csv.DictReader(source)
 
         # check that the file has name and region columns
-        if "name" not in reader.fieldnames or "region" not in reader.fieldnames:
+        if not reader.fieldnames or "name" not in reader.fieldnames or "region" not in reader.fieldnames:
             raise ValueError("Expected 'name' and 'region' columns.")
 
         for row in reader:
