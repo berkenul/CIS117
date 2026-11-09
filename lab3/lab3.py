@@ -12,7 +12,7 @@ try:
     os.makedirs("output", exist_ok=True)
 
     # open the csv file and read it
-    with open("country_full.csv", "r") as source:
+    with open("country_full.csv", "r", encoding="utf-8") as source:
         reader = csv.DictReader(source)
 
         # check that the file has name and region columns
@@ -34,7 +34,7 @@ try:
     # make a file for each region and write the countries in it
     for region, countries in countries_by_region.items():
         filename = "output/" + region + ".CSV"
-        with open(filename, "w", newline="") as output:
+        with open(filename, "w", newline="", encoding="utf-8") as output:
             writer = csv.writer(output)
             writer.writerow(["name", "region"])
             writer.writerows(countries)
