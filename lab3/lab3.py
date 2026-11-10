@@ -18,6 +18,7 @@ def read_countries_by_region(filename="country_full.csv"):
             reader = csv.DictReader(file)
             fields = reader.fieldnames or []
 
+            # check that the file has name and region columns
             if "name" not in fields or "region" not in fields:
                 print("Error: The file must have 'name' and 'region' columns.")
                 return {}
@@ -30,6 +31,7 @@ def read_countries_by_region(filename="country_full.csv"):
                 if not name or not region:
                     continue
 
+                # add the country to its region
                 if region not in countries_by_region:
                     countries_by_region[region] = []
 
@@ -45,7 +47,7 @@ def read_countries_by_region(filename="country_full.csv"):
         print(f"Error: Could not read the CSV data: {error}")
     except UnicodeError as error:
         print(f"Error: Could not decode the file: {error}")
-    except OSError as error:
+    except OSError as error:  # OSError covers IOError too in python 3
         print(f"Error: Could not open/read the file: {error}")
 
     return {}
