@@ -1,7 +1,7 @@
 # CIS-117 Lab3
 # Reads country_full.csv and writes a CSV file for each region.
 # Alex Sett and Berk Enul
-# Group: [add your group number]
+# Group: 1
 # Alex worked on reading and grouping the data.
 # Berk worked on writing the output files.
 
@@ -26,6 +26,7 @@ def read_countries_by_region(filename="country_full.csv"):
                 name = (row["name"] or "").strip()
                 region = (row["region"] or "").strip()
 
+                # skip rows with no region (Antarctica)
                 if not name or not region:
                     continue
 
@@ -55,6 +56,7 @@ def write_region_files(countries_by_region):
     try:
         os.makedirs("output", exist_ok=True)
 
+        # make a file for each region
         for region, countries in countries_by_region.items():
             filename = os.path.join("output", region + ".CSV")
             with open(filename, "w", newline="", encoding="utf-8") as file:
